@@ -9,7 +9,7 @@ GameRecords::GameRecords() : highScore(0) {
 }
 
 void GameRecords::save(int score, int lives) {
-    std::ofstream file("Resources/records.csv", std::ios::app);
+    std::ofstream file("../Resources/records.csv", std::ios::app);
     if (file.is_open()) {
         std::time_t now = std::time(nullptr);
         std::string timestamp = std::ctime(&now);
@@ -23,7 +23,7 @@ void GameRecords::save(int score, int lives) {
 }
 
 void GameRecords::load() {
-    std::ifstream file("Resources/records.csv");
+    std::ifstream file("../Resources/records.csv");
     if (file.is_open()) {
         std::string line;
         while (std::getline(file, line)) {

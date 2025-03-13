@@ -19,7 +19,7 @@ void GameScreen::handleEvents(sf::RenderWindow& window) {
             screenManager.setScreen(std::make_unique<MenuScreen>(screenManager));
         }
     }
-    hud.handleEvents(event, gameLogic, screenManager);
+    hud.handleEvents(event, gameLogic, screenManager,menuClickSound);
 }
 
 void GameScreen::update(sf::Time deltaTime) {

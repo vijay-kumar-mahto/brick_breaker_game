@@ -93,8 +93,8 @@ HUD::HUD() : isPopupActive(false) {
     mainMenuButtonText.setFillColor(sf::Color::White);
     mainMenuButtonText.setPosition(680, 63);
 
-    popupWindow.setSize(sf::Vector2f(300, 200));
-    popupWindow.setPosition(250, 200);
+    popupWindow.setSize(sf::Vector2f(400, 200));
+    popupWindow.setPosition(200, 200);
     popupWindow.setFillColor(sf::Color(40, 40, 60, 220));
     popupWindow.setOutlineColor(sf::Color(150, 150, 150));
     popupWindow.setOutlineThickness(2);
@@ -103,10 +103,10 @@ HUD::HUD() : isPopupActive(false) {
     popupTitle.setString("Game Over");
     popupTitle.setCharacterSize(30);
     popupTitle.setFillColor(sf::Color::White);
-    popupTitle.setPosition(350, 220);
+    popupTitle.setPosition(325, 220);
 
     popupExitButton.setSize(sf::Vector2f(80, 40));
-    popupExitButton.setPosition(260, 300);
+    popupExitButton.setPosition(230, 300);
     popupExitButton.setFillColor(sf::Color(200, 50, 50));
     popupExitButton.setOutlineColor(sf::Color::White);
     popupExitButton.setOutlineThickness(2);
@@ -115,10 +115,10 @@ HUD::HUD() : isPopupActive(false) {
     popupExitButtonText.setString("Exit");
     popupExitButtonText.setCharacterSize(20);
     popupExitButtonText.setFillColor(sf::Color::White);
-    popupExitButtonText.setPosition(280, 308);
+    popupExitButtonText.setPosition(255, 308);
 
     popupResetButton.setSize(sf::Vector2f(80, 40));
-    popupResetButton.setPosition(350, 300);
+    popupResetButton.setPosition(360, 300);
     popupResetButton.setFillColor(sf::Color(50, 200, 50));
     popupResetButton.setOutlineColor(sf::Color::White);
     popupResetButton.setOutlineThickness(2);
@@ -127,10 +127,10 @@ HUD::HUD() : isPopupActive(false) {
     popupResetButtonText.setString("Reset");
     popupResetButtonText.setCharacterSize(20);
     popupResetButtonText.setFillColor(sf::Color::White);
-    popupResetButtonText.setPosition(365, 308);
+    popupResetButtonText.setPosition(370, 308);
 
     popupMainMenuButton.setSize(sf::Vector2f(80, 40));
-    popupMainMenuButton.setPosition(440, 300);
+    popupMainMenuButton.setPosition(490, 300);
     popupMainMenuButton.setFillColor(sf::Color(50, 50, 200));
     popupMainMenuButton.setOutlineColor(sf::Color::White);
     popupMainMenuButton.setOutlineThickness(2);
@@ -139,29 +139,34 @@ HUD::HUD() : isPopupActive(false) {
     popupMainMenuButtonText.setString("Menu");
     popupMainMenuButtonText.setCharacterSize(20);
     popupMainMenuButtonText.setFillColor(sf::Color::White);
-    popupMainMenuButtonText.setPosition(460, 308);
+    popupMainMenuButtonText.setPosition(505, 308);
 }
 
-void HUD::handleEvents(sf::Event& event, GameLogic& gameLogic, ScreenManager& screenManager) {
+void HUD::handleEvents(sf::Event& event, GameLogic& gameLogic, ScreenManager& screenManager, sf::Sound& menuClickSound) {
     if (event.type == sf::Event::MouseMoved) {
         sf::Vector2i mousePos = sf::Mouse::getPosition(screenManager.getWindow());
-        if (pauseResumeButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
-            pauseResumeButton.setScale(1.05f, 1.05f);
-        else
-            pauseResumeButton.setScale(1.0f, 1.0f);
-        if (exitButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
-            exitButton.setScale(1.05f, 1.05f);
-        else
-            exitButton.setScale(1.0f, 1.0f);
-        if (resetButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
-            resetButton.setScale(1.05f, 1.05f);
-        else
-            resetButton.setScale(1.0f, 1.0f);
-        if (mainMenuButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
-            mainMenuButton.setScale(1.05f, 1.05f);
-        else
-            mainMenuButton.setScale(1.0f, 1.0f);
 
+        // Bar 2 buttons: Only handle hover if popup is not active
+        if (!isPopupActive) {
+            if (pauseResumeButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
+                pauseResumeButton.setScale(1.05f, 1.05f);
+            else
+                pauseResumeButton.setScale(1.0f, 1.0f);
+            if (exitButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
+                exitButton.setScale(1.05f, 1.05f);
+            else
+                exitButton.setScale(1.0f, 1.0f);
+            if (resetButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
+                resetButton.setScale(1.05f, 1.05f);
+            else
+                resetButton.setScale(1.0f, 1.0f);
+            if (mainMenuButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
+                mainMenuButton.setScale(1.05f, 1.05f);
+            else
+                mainMenuButton.setScale(1.0f, 1.0f);
+        }
+
+        // Popup buttons: Always handle hover if popup is active
         if (isPopupActive) {
             if (popupExitButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
                 popupExitButton.setScale(1.05f, 1.05f);
@@ -180,29 +185,41 @@ void HUD::handleEvents(sf::Event& event, GameLogic& gameLogic, ScreenManager& sc
 
     if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
         sf::Vector2i mousePos = sf::Mouse::getPosition(screenManager.getWindow());
-        if (pauseResumeButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
-            bool isCurrentlyPaused = gameLogic.isPaused();
-            gameLogic.setPaused(!isCurrentlyPaused); // Toggle pause state
-        }
-        if (exitButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
-            screenManager.getWindow().close();
-        }
-        if (resetButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
-            gameLogic.resetGame(true);
-        }
-        if (mainMenuButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
-            screenManager.setScreen(std::make_unique<MenuScreen>(screenManager));
+
+        // Bar 2 buttons: Only handle clicks if popup is not active
+        if (!isPopupActive) {
+            if (pauseResumeButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
+                menuClickSound.play();
+                bool isCurrentlyPaused = gameLogic.isPaused();
+                gameLogic.setPaused(!isCurrentlyPaused);
+            }
+            if (exitButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
+                menuClickSound.play();
+                screenManager.getWindow().close();
+            }
+            if (resetButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
+                menuClickSound.play();
+                gameLogic.resetGame(true);
+            }
+            if (mainMenuButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
+                menuClickSound.play();
+                screenManager.setScreen(std::make_unique<MenuScreen>(screenManager));
+            }
         }
 
+        // Popup buttons: Always handle clicks if popup is active
         if (isPopupActive) {
             if (popupExitButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
+                menuClickSound.play();
                 screenManager.getWindow().close();
             }
             if (popupResetButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
+                menuClickSound.play();
                 gameLogic.resetGame(true);
                 isPopupActive = false;
             }
             if (popupMainMenuButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
+                menuClickSound.play();
                 screenManager.setScreen(std::make_unique<MenuScreen>(screenManager));
                 isPopupActive = false;
             }
@@ -219,7 +236,7 @@ void HUD::update(int score, int lives, int level, GameLogic& gameLogic) {
     highScoreText.setString("High Score: " + std::to_string(gameLogic.getHighScore()));
     levelText.setString("Level: " + std::to_string(level));
     livesText.setString("Lives: " + std::to_string(lives));
-    pauseResumeText.setString(gameLogic.isPaused() ? "Resume" : "Pause"); // Toggle text
+    pauseResumeText.setString(gameLogic.isPaused() ? "Resume" : "Pause");
 
     if (gameLogic.isGameOver() && !isPopupActive) {
         isPopupActive = true;

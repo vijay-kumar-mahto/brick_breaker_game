@@ -24,7 +24,7 @@ void Interface::setup(sf::RenderWindow& window) {
     titleText.setOutlineThickness(2);
     titleText.setPosition(220, 120);
 
-    newGameButton.setSize(sf::Vector2f(200, 60));
+    newGameButton.setSize(sf::Vector2f(230, 60));
     newGameButton.setPosition(300, 250);
     newGameButton.setFillColor(sf::Color(60, 120, 180));
     newGameButton.setOutlineColor(sf::Color::White);
@@ -36,7 +36,7 @@ void Interface::setup(sf::RenderWindow& window) {
     newGameText.setFillColor(sf::Color::White);
     newGameText.setPosition(320, 260);
 
-    resumeGameButton.setSize(sf::Vector2f(200, 60));
+    resumeGameButton.setSize(sf::Vector2f(230, 60));
     resumeGameButton.setPosition(300, 340);
     resumeGameButton.setFillColor(sf::Color(60, 120, 180));
     resumeGameButton.setOutlineColor(sf::Color::White);
@@ -59,8 +59,8 @@ void Interface::setup(sf::RenderWindow& window) {
     highScoreText.setOutlineThickness(1);
     highScoreText.setPosition(150, 10);
 
-    level1Button.setSize(sf::Vector2f(100, 40));
-    level1Button.setPosition(250, 250);
+    level1Button.setSize(sf::Vector2f(110, 40));
+    level1Button.setPosition(200, 250);
     level1Button.setFillColor(sf::Color(60, 120, 180));
     level1Button.setOutlineColor(sf::Color::White);
     level1Button.setOutlineThickness(2);
@@ -69,9 +69,9 @@ void Interface::setup(sf::RenderWindow& window) {
     level1Text.setString("Level 1");
     level1Text.setCharacterSize(20);
     level1Text.setFillColor(sf::Color::White);
-    level1Text.setPosition(260, 255);
+    level1Text.setPosition(220, 255);
 
-    level2Button.setSize(sf::Vector2f(100, 40));
+    level2Button.setSize(sf::Vector2f(110, 40));
     level2Button.setPosition(350, 250);
     level2Button.setFillColor(sf::Color(60, 120, 180));
     level2Button.setOutlineColor(sf::Color::White);
@@ -81,10 +81,10 @@ void Interface::setup(sf::RenderWindow& window) {
     level2Text.setString("Level 2");
     level2Text.setCharacterSize(20);
     level2Text.setFillColor(sf::Color::White);
-    level2Text.setPosition(360, 255);
+    level2Text.setPosition(370, 255);
 
-    level3Button.setSize(sf::Vector2f(100, 40));
-    level3Button.setPosition(450, 250);
+    level3Button.setSize(sf::Vector2f(110, 40));
+    level3Button.setPosition(500, 250);
     level3Button.setFillColor(sf::Color(60, 120, 180));
     level3Button.setOutlineColor(sf::Color::White);
     level3Button.setOutlineThickness(2);
@@ -93,7 +93,7 @@ void Interface::setup(sf::RenderWindow& window) {
     level3Text.setString("Level 3");
     level3Text.setCharacterSize(20);
     level3Text.setFillColor(sf::Color::White);
-    level3Text.setPosition(460, 255);
+    level3Text.setPosition(520, 255);
 }
 
 void Interface::handleMouseEvents(sf::Event& event, bool& selectingLevel, bool resumeAvailable, sf::Sound& menuClickSound, ScreenManager& screenManager) {
@@ -103,7 +103,7 @@ void Interface::handleMouseEvents(sf::Event& event, bool& selectingLevel, bool r
             newGameButton.setScale(1.05f, 1.05f);
         else
             newGameButton.setScale(1.0f, 1.0f);
-        if (resumeGameButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)) && resumeAvailable)
+        if (resumeGameButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
             resumeGameButton.setScale(1.05f, 1.05f);
         else
             resumeGameButton.setScale(1.0f, 1.0f);
@@ -128,7 +128,7 @@ void Interface::handleMouseEvents(sf::Event& event, bool& selectingLevel, bool r
                 menuClickSound.play();
                 selectingLevel = true;
             }
-            else if (resumeGameButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)) && resumeAvailable) {
+            else if (resumeGameButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
                 menuClickSound.play();
                 screenManager.setScreen(std::make_unique<GameScreen>(screenManager));
             }

@@ -100,7 +100,8 @@ void GameLogic::spawnPowerUp(sf::Vector2f position) {
 
 void GameLogic::nextLevel() {
     bricks.clear();
-    ball.setSpeed(400.0f + (level - 1) * 50.0f);
+    //ball.setSpeed(150.0f + (level - 1) * 50.0f);
+    ball.setSpeed(100.0f);
     gameSpeed = 1.0f + (level - 1) * 0.2f;
 
     int rows = 4 + level;

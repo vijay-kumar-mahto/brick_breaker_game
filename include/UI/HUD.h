@@ -2,13 +2,14 @@
 #define HUD_H
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "GameLogic.h"
 #include "ScreenManager.h"
 
 class HUD {
 public:
     HUD();
-    void handleEvents(sf::Event& event, GameLogic& gameLogic, ScreenManager& screenManager);
+    void handleEvents(sf::Event& event, GameLogic& gameLogic, ScreenManager& screenManager, sf::Sound& menuClickSound);
     void update(int score, int lives, int level, GameLogic& gameLogic);
     void render(sf::RenderWindow& window, bool isGameOver);
 
