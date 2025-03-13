@@ -4,22 +4,28 @@ project(BrickBreaker)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
+find_package(SFML 2.5 COMPONENTS graphics window system audio REQUIRED)
 
 add_executable(BrickBreaker
         main.cpp
-        src/Core/Game.cpp
+        src/Core/GameLogic.cpp
         src/Core/Paddle.cpp
         src/Core/Ball.cpp
         src/Core/Brick.cpp
         src/Core/PowerUp.cpp
+        src/Screens/GameScreen.cpp
+        src/Screens/MenuScreen.cpp
+        src/Screens/ScreenManager.cpp
         src/UI/Interface.cpp
+        src/UI/HUD.cpp
         src/Utils/GameRecords.cpp
+        src/Utils/ResourceManager.cpp
         include/Core/State.h
 )
 
 target_include_directories(BrickBreaker PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/Screens
         ${CMAKE_CURRENT_SOURCE_DIR}/include/Core # Added for Core headers
         ${CMAKE_CURRENT_SOURCE_DIR}/include/UI   # Added for UI headers
         ${CMAKE_CURRENT_SOURCE_DIR}/include/Utils # Added for Utils headers

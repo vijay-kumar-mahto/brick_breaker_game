@@ -1,7 +1,9 @@
-#include "Game.h"
+#include "ScreenManager.h"
+#include "ResourceManager.h"
 
 int main() {
-    Game game;
-    game.run();
+    ResourceManager::getInstance().loadResources(); // Load resources once
+    ScreenManager screenManager;
+    screenManager.run();
     return 0;
 }

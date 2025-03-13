@@ -52,56 +52,91 @@ build cmake_object_order_depends_target_BrickBreaker: phony || .
 build CMakeFiles/BrickBreaker.dir/main.cpp.o: CXX_COMPILER__BrickBreaker_unscanned_Debug /home/vijay/CLionProjects/BrickBreaker/main.cpp || cmake_object_order_depends_target_BrickBreaker
   DEP_FILE = CMakeFiles/BrickBreaker.dir/main.cpp.o.d
   FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
-  INCLUDES = -I/home/vijay/CLionProjects/BrickBreaker/include -I/home/vijay/CLionProjects/BrickBreaker/include/Core -I/home/vijay/CLionProjects/BrickBreaker/include/UI -I/home/vijay/CLionProjects/BrickBreaker/include/Utils
+  INCLUDES = -I/home/vijay/CLionProjects/BrickBreaker/include -I/home/vijay/CLionProjects/BrickBreaker/include/Screens -I/home/vijay/CLionProjects/BrickBreaker/include/Core -I/home/vijay/CLionProjects/BrickBreaker/include/UI -I/home/vijay/CLionProjects/BrickBreaker/include/Utils
   OBJECT_DIR = CMakeFiles/BrickBreaker.dir
   OBJECT_FILE_DIR = CMakeFiles/BrickBreaker.dir
 
-build CMakeFiles/BrickBreaker.dir/src/Core/Game.cpp.o: CXX_COMPILER__BrickBreaker_unscanned_Debug /home/vijay/CLionProjects/BrickBreaker/src/Core/Game.cpp || cmake_object_order_depends_target_BrickBreaker
-  DEP_FILE = CMakeFiles/BrickBreaker.dir/src/Core/Game.cpp.o.d
+build CMakeFiles/BrickBreaker.dir/src/Core/GameLogic.cpp.o: CXX_COMPILER__BrickBreaker_unscanned_Debug /home/vijay/CLionProjects/BrickBreaker/src/Core/GameLogic.cpp || cmake_object_order_depends_target_BrickBreaker
+  DEP_FILE = CMakeFiles/BrickBreaker.dir/src/Core/GameLogic.cpp.o.d
   FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
-  INCLUDES = -I/home/vijay/CLionProjects/BrickBreaker/include -I/home/vijay/CLionProjects/BrickBreaker/include/Core -I/home/vijay/CLionProjects/BrickBreaker/include/UI -I/home/vijay/CLionProjects/BrickBreaker/include/Utils
+  INCLUDES = -I/home/vijay/CLionProjects/BrickBreaker/include -I/home/vijay/CLionProjects/BrickBreaker/include/Screens -I/home/vijay/CLionProjects/BrickBreaker/include/Core -I/home/vijay/CLionProjects/BrickBreaker/include/UI -I/home/vijay/CLionProjects/BrickBreaker/include/Utils
   OBJECT_DIR = CMakeFiles/BrickBreaker.dir
   OBJECT_FILE_DIR = CMakeFiles/BrickBreaker.dir/src/Core
 
 build CMakeFiles/BrickBreaker.dir/src/Core/Paddle.cpp.o: CXX_COMPILER__BrickBreaker_unscanned_Debug /home/vijay/CLionProjects/BrickBreaker/src/Core/Paddle.cpp || cmake_object_order_depends_target_BrickBreaker
   DEP_FILE = CMakeFiles/BrickBreaker.dir/src/Core/Paddle.cpp.o.d
   FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
-  INCLUDES = -I/home/vijay/CLionProjects/BrickBreaker/include -I/home/vijay/CLionProjects/BrickBreaker/include/Core -I/home/vijay/CLionProjects/BrickBreaker/include/UI -I/home/vijay/CLionProjects/BrickBreaker/include/Utils
+  INCLUDES = -I/home/vijay/CLionProjects/BrickBreaker/include -I/home/vijay/CLionProjects/BrickBreaker/include/Screens -I/home/vijay/CLionProjects/BrickBreaker/include/Core -I/home/vijay/CLionProjects/BrickBreaker/include/UI -I/home/vijay/CLionProjects/BrickBreaker/include/Utils
   OBJECT_DIR = CMakeFiles/BrickBreaker.dir
   OBJECT_FILE_DIR = CMakeFiles/BrickBreaker.dir/src/Core
 
 build CMakeFiles/BrickBreaker.dir/src/Core/Ball.cpp.o: CXX_COMPILER__BrickBreaker_unscanned_Debug /home/vijay/CLionProjects/BrickBreaker/src/Core/Ball.cpp || cmake_object_order_depends_target_BrickBreaker
   DEP_FILE = CMakeFiles/BrickBreaker.dir/src/Core/Ball.cpp.o.d
   FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
-  INCLUDES = -I/home/vijay/CLionProjects/BrickBreaker/include -I/home/vijay/CLionProjects/BrickBreaker/include/Core -I/home/vijay/CLionProjects/BrickBreaker/include/UI -I/home/vijay/CLionProjects/BrickBreaker/include/Utils
+  INCLUDES = -I/home/vijay/CLionProjects/BrickBreaker/include -I/home/vijay/CLionProjects/BrickBreaker/include/Screens -I/home/vijay/CLionProjects/BrickBreaker/include/Core -I/home/vijay/CLionProjects/BrickBreaker/include/UI -I/home/vijay/CLionProjects/BrickBreaker/include/Utils
   OBJECT_DIR = CMakeFiles/BrickBreaker.dir
   OBJECT_FILE_DIR = CMakeFiles/BrickBreaker.dir/src/Core
 
 build CMakeFiles/BrickBreaker.dir/src/Core/Brick.cpp.o: CXX_COMPILER__BrickBreaker_unscanned_Debug /home/vijay/CLionProjects/BrickBreaker/src/Core/Brick.cpp || cmake_object_order_depends_target_BrickBreaker
   DEP_FILE = CMakeFiles/BrickBreaker.dir/src/Core/Brick.cpp.o.d
   FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
-  INCLUDES = -I/home/vijay/CLionProjects/BrickBreaker/include -I/home/vijay/CLionProjects/BrickBreaker/include/Core -I/home/vijay/CLionProjects/BrickBreaker/include/UI -I/home/vijay/CLionProjects/BrickBreaker/include/Utils
+  INCLUDES = -I/home/vijay/CLionProjects/BrickBreaker/include -I/home/vijay/CLionProjects/BrickBreaker/include/Screens -I/home/vijay/CLionProjects/BrickBreaker/include/Core -I/home/vijay/CLionProjects/BrickBreaker/include/UI -I/home/vijay/CLionProjects/BrickBreaker/include/Utils
   OBJECT_DIR = CMakeFiles/BrickBreaker.dir
   OBJECT_FILE_DIR = CMakeFiles/BrickBreaker.dir/src/Core
 
 build CMakeFiles/BrickBreaker.dir/src/Core/PowerUp.cpp.o: CXX_COMPILER__BrickBreaker_unscanned_Debug /home/vijay/CLionProjects/BrickBreaker/src/Core/PowerUp.cpp || cmake_object_order_depends_target_BrickBreaker
   DEP_FILE = CMakeFiles/BrickBreaker.dir/src/Core/PowerUp.cpp.o.d
   FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
-  INCLUDES = -I/home/vijay/CLionProjects/BrickBreaker/include -I/home/vijay/CLionProjects/BrickBreaker/include/Core -I/home/vijay/CLionProjects/BrickBreaker/include/UI -I/home/vijay/CLionProjects/BrickBreaker/include/Utils
+  INCLUDES = -I/home/vijay/CLionProjects/BrickBreaker/include -I/home/vijay/CLionProjects/BrickBreaker/include/Screens -I/home/vijay/CLionProjects/BrickBreaker/include/Core -I/home/vijay/CLionProjects/BrickBreaker/include/UI -I/home/vijay/CLionProjects/BrickBreaker/include/Utils
   OBJECT_DIR = CMakeFiles/BrickBreaker.dir
   OBJECT_FILE_DIR = CMakeFiles/BrickBreaker.dir/src/Core
+
+build CMakeFiles/BrickBreaker.dir/src/Screens/GameScreen.cpp.o: CXX_COMPILER__BrickBreaker_unscanned_Debug /home/vijay/CLionProjects/BrickBreaker/src/Screens/GameScreen.cpp || cmake_object_order_depends_target_BrickBreaker
+  DEP_FILE = CMakeFiles/BrickBreaker.dir/src/Screens/GameScreen.cpp.o.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  INCLUDES = -I/home/vijay/CLionProjects/BrickBreaker/include -I/home/vijay/CLionProjects/BrickBreaker/include/Screens -I/home/vijay/CLionProjects/BrickBreaker/include/Core -I/home/vijay/CLionProjects/BrickBreaker/include/UI -I/home/vijay/CLionProjects/BrickBreaker/include/Utils
+  OBJECT_DIR = CMakeFiles/BrickBreaker.dir
+  OBJECT_FILE_DIR = CMakeFiles/BrickBreaker.dir/src/Screens
+
+build CMakeFiles/BrickBreaker.dir/src/Screens/MenuScreen.cpp.o: CXX_COMPILER__BrickBreaker_unscanned_Debug /home/vijay/CLionProjects/BrickBreaker/src/Screens/MenuScreen.cpp || cmake_object_order_depends_target_BrickBreaker
+  DEP_FILE = CMakeFiles/BrickBreaker.dir/src/Screens/MenuScreen.cpp.o.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  INCLUDES = -I/home/vijay/CLionProjects/BrickBreaker/include -I/home/vijay/CLionProjects/BrickBreaker/include/Screens -I/home/vijay/CLionProjects/BrickBreaker/include/Core -I/home/vijay/CLionProjects/BrickBreaker/include/UI -I/home/vijay/CLionProjects/BrickBreaker/include/Utils
+  OBJECT_DIR = CMakeFiles/BrickBreaker.dir
+  OBJECT_FILE_DIR = CMakeFiles/BrickBreaker.dir/src/Screens
+
+build CMakeFiles/BrickBreaker.dir/src/Screens/ScreenManager.cpp.o: CXX_COMPILER__BrickBreaker_unscanned_Debug /home/vijay/CLionProjects/BrickBreaker/src/Screens/ScreenManager.cpp || cmake_object_order_depends_target_BrickBreaker
+  DEP_FILE = CMakeFiles/BrickBreaker.dir/src/Screens/ScreenManager.cpp.o.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  INCLUDES = -I/home/vijay/CLionProjects/BrickBreaker/include -I/home/vijay/CLionProjects/BrickBreaker/include/Screens -I/home/vijay/CLionProjects/BrickBreaker/include/Core -I/home/vijay/CLionProjects/BrickBreaker/include/UI -I/home/vijay/CLionProjects/BrickBreaker/include/Utils
+  OBJECT_DIR = CMakeFiles/BrickBreaker.dir
+  OBJECT_FILE_DIR = CMakeFiles/BrickBreaker.dir/src/Screens
 
 build CMakeFiles/BrickBreaker.dir/src/UI/Interface.cpp.o: CXX_COMPILER__BrickBreaker_unscanned_Debug /home/vijay/CLionProjects/BrickBreaker/src/UI/Interface.cpp || cmake_object_order_depends_target_BrickBreaker
   DEP_FILE = CMakeFiles/BrickBreaker.dir/src/UI/Interface.cpp.o.d
   FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
-  INCLUDES = -I/home/vijay/CLionProjects/BrickBreaker/include -I/home/vijay/CLionProjects/BrickBreaker/include/Core -I/home/vijay/CLionProjects/BrickBreaker/include/UI -I/home/vijay/CLionProjects/BrickBreaker/include/Utils
+  INCLUDES = -I/home/vijay/CLionProjects/BrickBreaker/include -I/home/vijay/CLionProjects/BrickBreaker/include/Screens -I/home/vijay/CLionProjects/BrickBreaker/include/Core -I/home/vijay/CLionProjects/BrickBreaker/include/UI -I/home/vijay/CLionProjects/BrickBreaker/include/Utils
+  OBJECT_DIR = CMakeFiles/BrickBreaker.dir
+  OBJECT_FILE_DIR = CMakeFiles/BrickBreaker.dir/src/UI
+
+build CMakeFiles/BrickBreaker.dir/src/UI/HUD.cpp.o: CXX_COMPILER__BrickBreaker_unscanned_Debug /home/vijay/CLionProjects/BrickBreaker/src/UI/HUD.cpp || cmake_object_order_depends_target_BrickBreaker
+  DEP_FILE = CMakeFiles/BrickBreaker.dir/src/UI/HUD.cpp.o.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  INCLUDES = -I/home/vijay/CLionProjects/BrickBreaker/include -I/home/vijay/CLionProjects/BrickBreaker/include/Screens -I/home/vijay/CLionProjects/BrickBreaker/include/Core -I/home/vijay/CLionProjects/BrickBreaker/include/UI -I/home/vijay/CLionProjects/BrickBreaker/include/Utils
   OBJECT_DIR = CMakeFiles/BrickBreaker.dir
   OBJECT_FILE_DIR = CMakeFiles/BrickBreaker.dir/src/UI
 
 build CMakeFiles/BrickBreaker.dir/src/Utils/GameRecords.cpp.o: CXX_COMPILER__BrickBreaker_unscanned_Debug /home/vijay/CLionProjects/BrickBreaker/src/Utils/GameRecords.cpp || cmake_object_order_depends_target_BrickBreaker
   DEP_FILE = CMakeFiles/BrickBreaker.dir/src/Utils/GameRecords.cpp.o.d
   FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
-  INCLUDES = -I/home/vijay/CLionProjects/BrickBreaker/include -I/home/vijay/CLionProjects/BrickBreaker/include/Core -I/home/vijay/CLionProjects/BrickBreaker/include/UI -I/home/vijay/CLionProjects/BrickBreaker/include/Utils
+  INCLUDES = -I/home/vijay/CLionProjects/BrickBreaker/include -I/home/vijay/CLionProjects/BrickBreaker/include/Screens -I/home/vijay/CLionProjects/BrickBreaker/include/Core -I/home/vijay/CLionProjects/BrickBreaker/include/UI -I/home/vijay/CLionProjects/BrickBreaker/include/Utils
+  OBJECT_DIR = CMakeFiles/BrickBreaker.dir
+  OBJECT_FILE_DIR = CMakeFiles/BrickBreaker.dir/src/Utils
+
+build CMakeFiles/BrickBreaker.dir/src/Utils/ResourceManager.cpp.o: CXX_COMPILER__BrickBreaker_unscanned_Debug /home/vijay/CLionProjects/BrickBreaker/src/Utils/ResourceManager.cpp || cmake_object_order_depends_target_BrickBreaker
+  DEP_FILE = CMakeFiles/BrickBreaker.dir/src/Utils/ResourceManager.cpp.o.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  INCLUDES = -I/home/vijay/CLionProjects/BrickBreaker/include -I/home/vijay/CLionProjects/BrickBreaker/include/Screens -I/home/vijay/CLionProjects/BrickBreaker/include/Core -I/home/vijay/CLionProjects/BrickBreaker/include/UI -I/home/vijay/CLionProjects/BrickBreaker/include/Utils
   OBJECT_DIR = CMakeFiles/BrickBreaker.dir
   OBJECT_FILE_DIR = CMakeFiles/BrickBreaker.dir/src/Utils
 
@@ -113,7 +148,7 @@ build CMakeFiles/BrickBreaker.dir/src/Utils/GameRecords.cpp.o: CXX_COMPILER__Bri
 #############################################
 # Link the executable BrickBreaker
 
-build BrickBreaker: CXX_EXECUTABLE_LINKER__BrickBreaker_Debug CMakeFiles/BrickBreaker.dir/main.cpp.o CMakeFiles/BrickBreaker.dir/src/Core/Game.cpp.o CMakeFiles/BrickBreaker.dir/src/Core/Paddle.cpp.o CMakeFiles/BrickBreaker.dir/src/Core/Ball.cpp.o CMakeFiles/BrickBreaker.dir/src/Core/Brick.cpp.o CMakeFiles/BrickBreaker.dir/src/Core/PowerUp.cpp.o CMakeFiles/BrickBreaker.dir/src/UI/Interface.cpp.o CMakeFiles/BrickBreaker.dir/src/Utils/GameRecords.cpp.o | /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.2.6.1 /usr/lib/x86_64-linux-gnu/libsfml-window.so.2.6.1 /usr/lib/x86_64-linux-gnu/libsfml-audio.so.2.6.1 /usr/lib/x86_64-linux-gnu/libsfml-system.so.2.6.1
+build BrickBreaker: CXX_EXECUTABLE_LINKER__BrickBreaker_Debug CMakeFiles/BrickBreaker.dir/main.cpp.o CMakeFiles/BrickBreaker.dir/src/Core/GameLogic.cpp.o CMakeFiles/BrickBreaker.dir/src/Core/Paddle.cpp.o CMakeFiles/BrickBreaker.dir/src/Core/Ball.cpp.o CMakeFiles/BrickBreaker.dir/src/Core/Brick.cpp.o CMakeFiles/BrickBreaker.dir/src/Core/PowerUp.cpp.o CMakeFiles/BrickBreaker.dir/src/Screens/GameScreen.cpp.o CMakeFiles/BrickBreaker.dir/src/Screens/MenuScreen.cpp.o CMakeFiles/BrickBreaker.dir/src/Screens/ScreenManager.cpp.o CMakeFiles/BrickBreaker.dir/src/UI/Interface.cpp.o CMakeFiles/BrickBreaker.dir/src/UI/HUD.cpp.o CMakeFiles/BrickBreaker.dir/src/Utils/GameRecords.cpp.o CMakeFiles/BrickBreaker.dir/src/Utils/ResourceManager.cpp.o | /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.2.6.1 /usr/lib/x86_64-linux-gnu/libsfml-window.so.2.6.1 /usr/lib/x86_64-linux-gnu/libsfml-audio.so.2.6.1 /usr/lib/x86_64-linux-gnu/libsfml-system.so.2.6.1
   FLAGS = -g
   LINK_LIBRARIES = /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.2.6.1  /usr/lib/x86_64-linux-gnu/libsfml-window.so.2.6.1  /usr/lib/x86_64-linux-gnu/libsfml-audio.so.2.6.1  /usr/lib/x86_64-linux-gnu/libsfml-system.so.2.6.1
   OBJECT_DIR = CMakeFiles/BrickBreaker.dir
