@@ -2,7 +2,7 @@
 #include "MenuScreen.h"
 #include <iostream>
 
-HUD::HUD() {
+HUD::HUD() : isPopupActive(false) {
     if (!font.loadFromFile("Resources/font.ttf")) {
         std::cout << "Failed to load font!" << std::endl;
     }
@@ -59,6 +59,55 @@ HUD::HUD() {
         heart.setScale(1.0f, 1.0f);
         heartSprites.push_back(heart);
     }
+
+    // Initialize popup window
+    popupWindow.setSize(sf::Vector2f(300, 200));
+    popupWindow.setPosition(250, 200);
+    popupWindow.setFillColor(sf::Color(40, 40, 60, 220));
+    popupWindow.setOutlineColor(sf::Color(150, 150, 150));
+    popupWindow.setOutlineThickness(2);
+
+    popupTitle.setFont(font);
+    popupTitle.setString("Game Over");
+    popupTitle.setCharacterSize(30);
+    popupTitle.setFillColor(sf::Color::White);
+    popupTitle.setPosition(350, 220);
+
+    exitButton.setSize(sf::Vector2f(80, 40));
+    exitButton.setPosition(260, 300);
+    exitButton.setFillColor(sf::Color(200, 50, 50));
+    exitButton.setOutlineColor(sf::Color::White);
+    exitButton.setOutlineThickness(2);
+
+    exitButtonText.setFont(font);
+    exitButtonText.setString("Exit");
+    exitButtonText.setCharacterSize(20);
+    exitButtonText.setFillColor(sf::Color::White);
+    exitButtonText.setPosition(280, 308);
+
+    resetButton.setSize(sf::Vector2f(80, 40));
+    resetButton.setPosition(350, 300);
+    resetButton.setFillColor(sf::Color(50, 200, 50));
+    resetButton.setOutlineColor(sf::Color::White);
+    resetButton.setOutlineThickness(2);
+
+    resetButtonText.setFont(font);
+    resetButtonText.setString("Reset");
+    resetButtonText.setCharacterSize(20);
+    resetButtonText.setFillColor(sf::Color::White);
+    resetButtonText.setPosition(365, 308);
+
+    mainMenuButton.setSize(sf::Vector2f(80, 40));
+    mainMenuButton.setPosition(440, 300);
+    mainMenuButton.setFillColor(sf::Color(50, 50, 200));
+    mainMenuButton.setOutlineColor(sf::Color::White);
+    mainMenuButton.setOutlineThickness(2);
+
+    mainMenuButtonText.setFont(font);
+    mainMenuButtonText.setString("Menu");
+    mainMenuButtonText.setCharacterSize(20);
+    mainMenuButtonText.setFillColor(sf::Color::White);
+    mainMenuButtonText.setPosition(460, 308);
 }
 
 void HUD::handleEvents(sf::Event& event, GameLogic& gameLogic, ScreenManager& screenManager) {
@@ -68,12 +117,41 @@ void HUD::handleEvents(sf::Event& event, GameLogic& gameLogic, ScreenManager& sc
             pauseResumeButton.setScale(1.05f, 1.05f);
         else
             pauseResumeButton.setScale(1.0f, 1.0f);
+
+        if (isPopupActive) {
+            if (exitButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
+                exitButton.setScale(1.05f, 1.05f);
+            else
+                exitButton.setScale(1.0f, 1.0f);
+            if (resetButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
+                resetButton.setScale(1.05f, 1.05f);
+            else
+                resetButton.setScale(1.0f, 1.0f);
+            if (mainMenuButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
+                mainMenuButton.setScale(1.05f, 1.05f);
+            else
+                mainMenuButton.setScale(1.0f, 1.0f);
+        }
     }
 
     if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
         sf::Vector2i mousePos = sf::Mouse::getPosition(screenManager.getWindow());
         if (pauseResumeButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
             screenManager.setScreen(std::make_unique<MenuScreen>(screenManager));
+        }
+
+        if (isPopupActive) {
+            if (exitButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
+                screenManager.getWindow().close();
+            }
+            if (resetButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
+                gameLogic.resetGame(true); // Reset the game directly via GameLogic
+                isPopupActive = false;
+            }
+            if (mainMenuButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
+                screenManager.setScreen(std::make_unique<MenuScreen>(screenManager));
+                isPopupActive = false;
+            }
         }
     }
 
@@ -82,13 +160,17 @@ void HUD::handleEvents(sf::Event& event, GameLogic& gameLogic, ScreenManager& sc
     }
 }
 
-void HUD::update(int score, int lives, int level) {
+void HUD::update(int score, int lives, int level, GameLogic& gameLogic) { // Updated with gameLogic parameter
     scoreText.setString("Score: " + std::to_string(score));
     levelText.setString("Level: " + std::to_string(level));
     for (int i = 0; i < 3; i++) {
         heartSprites[i].setColor(i < lives ? sf::Color::White : sf::Color(255, 255, 255, 50));
     }
     pauseResumeText.setString("||");
+
+    if (gameLogic.isGameOver() && !isPopupActive) { // Now uses the passed gameLogic
+        isPopupActive = true;
+    }
 }
 
 void HUD::render(sf::RenderWindow& window, bool isGameOver) {
@@ -100,7 +182,15 @@ void HUD::render(sf::RenderWindow& window, bool isGameOver) {
     }
     window.draw(pauseResumeButton);
     window.draw(pauseResumeText);
-    if (isGameOver) {
-        window.draw(gameOverText);
+
+    if (isPopupActive) {
+        window.draw(popupWindow);
+        window.draw(popupTitle);
+        window.draw(exitButton);
+        window.draw(exitButtonText);
+        window.draw(resetButton);
+        window.draw(resetButtonText);
+        window.draw(mainMenuButton);
+        window.draw(mainMenuButtonText);
     }
 }

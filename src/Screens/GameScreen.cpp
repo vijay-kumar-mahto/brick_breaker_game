@@ -26,7 +26,7 @@ void GameScreen::update(sf::Time deltaTime) {
     if (!gameLogic.isGameOver()) {
         gameLogic.update(deltaTime, screenManager.getWindow());
     }
-    hud.update(gameLogic.getScore(), gameLogic.getLives(), gameLogic.getLevel());
+    hud.update(gameLogic.getScore(), gameLogic.getLives(), gameLogic.getLevel(), gameLogic); // Updated to pass gameLogic
 }
 
 void GameScreen::render(sf::RenderWindow& window) {
