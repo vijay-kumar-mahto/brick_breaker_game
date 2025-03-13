@@ -1,0 +1,16 @@
+# ninja log v6
+2	641	1741808801493628944	CMakeFiles/BrickBreaker.dir/Paddle.cpp.o	5459228869a8a459
+1	646	1741859182623502289	CMakeFiles/BrickBreaker.dir/src/UI/Interface.cpp.o	c116f41a5daff205
+2	756	1741810173831311192	CMakeFiles/BrickBreaker.dir/PowerUp.cpp.o	94ca36cd0fd163c1
+1	1141	1741857781660221377	CMakeFiles/BrickBreaker.dir/src/Core/Game.cpp.o	a77cdcf02ac03e63
+3	793	1741808801494628939	CMakeFiles/BrickBreaker.dir/Brick.cpp.o	de7a9bbdb24c7704
+1	499	1741848935247636773	CMakeFiles/BrickBreaker.dir/src/Core/Paddle.cpp.o	11abe60f8f3bddbd
+1	21	1741874668489807009	build.ninja	ff1b234bdc96bbe1
+646	721	1741859183268500748	BrickBreaker	bbe7f425b639eb3b
+2	1017	1741810173831311192	CMakeFiles/BrickBreaker.dir/Game.cpp.o	1c64b11865480cdb
+1	483	1741848935247636773	CMakeFiles/BrickBreaker.dir/src/Core/Brick.cpp.o	e76055c6c9ad80
+1	872	1741848935247636773	CMakeFiles/BrickBreaker.dir/src/Core/Ball.cpp.o	b567196476030d9b
+2	531	1741810173831311192	CMakeFiles/BrickBreaker.dir/Ball.cpp.o	eaaf1670a2e29a91
+2	322	1741854824059266306	CMakeFiles/BrickBreaker.dir/src/Utils/GameRecords.cpp.o	76cccf4a237b97ba
+2	804	1741856567974017492	CMakeFiles/BrickBreaker.dir/main.cpp.o	55b4884d87b7391e
+2	846	1741848935248636787	CMakeFiles/BrickBreaker.dir/src/Core/PowerUp.cpp.o	320fbbb2cd562d42
