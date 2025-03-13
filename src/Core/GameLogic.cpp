@@ -9,7 +9,8 @@ GameLogic::GameLogic(sf::Sound& paddleHitSound)
     , score(0)
     , lives(3)
     , level(1)
-    , gameSpeed(1.0f) {
+    , gameSpeed(1.0f)
+    , paused(false) {
     brickBreakSound.setBuffer(ResourceManager::getInstance().getSoundBuffer("brick_break"));
     powerUpSound.setBuffer(ResourceManager::getInstance().getSoundBuffer("power_up"));
     lifeLostSound.setBuffer(ResourceManager::getInstance().getSoundBuffer("life_lost"));
@@ -18,51 +19,53 @@ GameLogic::GameLogic(sf::Sound& paddleHitSound)
 }
 
 void GameLogic::update(sf::Time deltaTime, sf::RenderWindow& window) {
-    paddle.update(deltaTime, window);
-    ball.update(deltaTime, paddle, window);
+    if (!paused) { // Only update if not paused
+        paddle.update(deltaTime, window);
+        ball.update(deltaTime, paddle, window);
 
-    for (auto it = bricks.begin(); it != bricks.end();) {
-        if (ball.getBounds().intersects(it->getBounds())) {
-            ball.bounceVertical();
-            score += it->hit() ? 10 : 5;
-            if (it->isDestroyed()) {
-                brickBreakSound.play();
-                if (rand() % 100 < 20)
-                    spawnPowerUp(it->getPosition());
-                it = bricks.erase(it);
+        for (auto it = bricks.begin(); it != bricks.end();) {
+            if (ball.getBounds().intersects(it->getBounds())) {
+                ball.bounceVertical();
+                score += it->hit() ? 10 : 5;
+                if (it->isDestroyed()) {
+                    brickBreakSound.play();
+                    if (rand() % 100 < 20)
+                        spawnPowerUp(it->getPosition());
+                    it = bricks.erase(it);
+                } else {
+                    ++it;
+                }
             } else {
                 ++it;
             }
-        } else {
-            ++it;
         }
-    }
 
-    for (auto it = powerUps.begin(); it != powerUps.end();) {
-        if (paddle.getBounds().intersects(it->getBounds())) {
-            powerUpSound.play();
-            it->applyEffect(paddle, ball);
-            it = powerUps.erase(it);
-        } else {
-            it->update(deltaTime);
-            if (it->isExpired()) it = powerUps.erase(it);
-            else ++it;
+        for (auto it = powerUps.begin(); it != powerUps.end();) {
+            if (paddle.getBounds().intersects(it->getBounds())) {
+                powerUpSound.play();
+                it->applyEffect(paddle, ball);
+                it = powerUps.erase(it);
+            } else {
+                it->update(deltaTime);
+                if (it->isExpired()) it = powerUps.erase(it);
+                else ++it;
+            }
         }
-    }
 
-    if (ball.isOutOfBounds()) {
-        lifeLostSound.play();
-        lives--;
-        ball.reset();
-        paddle.reset();
-        if (lives <= 0) {
-            records.save(score, lives);
+        if (ball.isOutOfBounds()) {
+            lifeLostSound.play();
+            lives--;
+            ball.reset();
+            paddle.reset();
+            if (lives <= 0) {
+                records.save(score, lives);
+            }
         }
-    }
 
-    if (bricks.empty() && level < 3) {
-        level++;
-        nextLevel();
+        if (bricks.empty() && level < 3) {
+            level++;
+            nextLevel();
+        }
     }
 }
 
@@ -88,6 +91,7 @@ void GameLogic::resetGame(bool newGame, int selectedLevel) {
         ball.reset();
         paddle.reset();
     }
+    paused = false; // Ensure paused is reset to false on new game
 }
 
 void GameLogic::spawnPowerUp(sf::Vector2f position) {
@@ -102,7 +106,7 @@ void GameLogic::nextLevel() {
     int rows = 4 + level;
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < rows; j++) {
-            bricks.emplace_back(100 * i + 50, 50 * j + 70, (rand() % (level + 1)) + 1);
+            bricks.emplace_back(100 * i + 50, 50 * j + 120, (rand() % (level + 1)) + 1);
         }
     }
 }

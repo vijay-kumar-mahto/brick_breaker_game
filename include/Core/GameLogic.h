@@ -23,6 +23,8 @@ public:
     int getLevel() const { return level; }
     int getHighScore() const { return records.getHighScore(); }
     bool isGameOver() const { return lives <= 0 || (bricks.empty() && level == 3); }
+    bool isPaused() const { return paused; } // New: Check paused state
+    void setPaused(bool pause) { paused = pause; } // New: Set paused state
 
 private:
     void spawnPowerUp(sf::Vector2f position);
@@ -39,6 +41,7 @@ private:
     int lives;
     int level;
     float gameSpeed;
+    bool paused = false; // New: Paused state
 };
 
 #endif
