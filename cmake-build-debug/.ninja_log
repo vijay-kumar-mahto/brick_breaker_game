@@ -27,3 +27,16 @@
 905	1036	1741902652140253768	BrickBreaker	c9aca9506cf12ea9
 2	331	1741902835776745469	CMakeFiles/BrickBreaker.dir/src/Utils/GameRecords.cpp.o	a444a819db280b81
 331	469	1741902836104730417	BrickBreaker	c9aca9506cf12ea9
+1	842	1741907964268894462	CMakeFiles/BrickBreaker.dir/main.cpp.o	f64d32e594b01f96
+2	863	1741907964269894453	CMakeFiles/BrickBreaker.dir/src/UI/Interface.cpp.o	6e03521f8bde390b
+3	890	1741907964270894444	CMakeFiles/BrickBreaker.dir/src/UI/HUD.cpp.o	5d7f98010cb1d448
+2	978	1741907964269894453	CMakeFiles/BrickBreaker.dir/src/Screens/ScreenManager.cpp.o	838bbcd2299878a9
+2	1021	1741907964269894453	CMakeFiles/BrickBreaker.dir/src/Screens/GameScreen.cpp.o	24228724cae51063
+2	1070	1741907964269894453	CMakeFiles/BrickBreaker.dir/src/Screens/MenuScreen.cpp.o	25473164d31e95a6
+1070	1184	1741907965337884726	BrickBreaker	c9aca9506cf12ea9
+4	706	1741907999449574270	CMakeFiles/BrickBreaker.dir/src/Screens/MenuScreen.cpp.o	25473164d31e95a6
+4	942	1741907999449574270	CMakeFiles/BrickBreaker.dir/src/Screens/ScreenManager.cpp.o	838bbcd2299878a9
+3	943	1741907999448574279	CMakeFiles/BrickBreaker.dir/src/Screens/GameScreen.cpp.o	24228724cae51063
+5	958	1741907999450574261	CMakeFiles/BrickBreaker.dir/src/UI/Interface.cpp.o	6e03521f8bde390b
+6	980	1741907999451574252	CMakeFiles/BrickBreaker.dir/src/UI/HUD.cpp.o	5d7f98010cb1d448
+980	1067	1741908000425565394	BrickBreaker	c9aca9506cf12ea9

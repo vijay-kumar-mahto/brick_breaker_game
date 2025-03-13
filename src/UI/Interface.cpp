@@ -3,7 +3,7 @@
 #include <cmath>
 #include <iostream>
 
-Interface::Interface() : animationTime(0.0f) {}
+Interface::Interface() : animationTime(0.0f), settingsHovered(false), settingsClicked(false) {}
 
 void Interface::setup(sf::RenderWindow& window) {
     if (!font.loadFromFile("Resources/font.ttf")) {
@@ -94,6 +94,38 @@ void Interface::setup(sf::RenderWindow& window) {
     level3Text.setCharacterSize(20);
     level3Text.setFillColor(sf::Color::White);
     level3Text.setPosition(520, 255);
+
+    // Setup for settings icon (gear) - Static with rectangular teeth
+    settingsIconOuter.setRadius(25);
+    settingsIconOuter.setPointCount(40); // Smooth outline
+    settingsIconOuter.setPosition(750, 50); // Top-right corner
+    settingsIconOuter.setFillColor(sf::Color::Transparent); // Hollow
+    settingsIconOuter.setOutlineColor(sf::Color::White); // White outline to match menu theme
+    settingsIconOuter.setOutlineThickness(1);
+    settingsIconOuter.setOrigin(25, 25);
+
+    settingsIconInner.setRadius(12);
+    settingsIconInner.setPointCount(40);
+    settingsIconInner.setPosition(750, 50);
+    settingsIconInner.setFillColor(sf::Color::Transparent); // Hollow center
+    settingsIconInner.setOutlineColor(sf::Color::White); // White outline
+    settingsIconInner.setOutlineThickness(14);
+    settingsIconInner.setOrigin(12, 12);
+
+    // Create 8 rectangular gear teeth
+    for (int i = 0; i < 8; ++i) {
+        settingsIconTeeth[i].setSize(sf::Vector2f(8, 12)); // Rectangular teeth
+        float angle = i * 45 * 3.14159f / 180.f; // 45 degrees apart
+        settingsIconTeeth[i].setPosition(
+            750 + 25 * std::cos(angle), // Position at outer edge
+            50 + 25 * std::sin(angle)
+        );
+        settingsIconTeeth[i].setFillColor(sf::Color::White); // Filled white
+        settingsIconTeeth[i].setOutlineColor(sf::Color::White); // White outline
+        settingsIconTeeth[i].setOutlineThickness(1);
+        settingsIconTeeth[i].setOrigin(0, 6);
+        settingsIconTeeth[i].setRotation(i * 45);
+    }
 }
 
 void Interface::handleMouseEvents(sf::Event& event, bool& selectingLevel, bool resumeAvailable, sf::Sound& menuClickSound, ScreenManager& screenManager) {
@@ -119,6 +151,23 @@ void Interface::handleMouseEvents(sf::Event& event, bool& selectingLevel, bool r
             level3Button.setScale(1.05f, 1.05f);
         else
             level3Button.setScale(1.0f, 1.0f);
+
+        // Handle hover for settings icon
+        if (settingsIconOuter.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
+            settingsHovered = true;
+            settingsIconOuter.setScale(1.1f, 1.1f);
+            settingsIconInner.setScale(1.1f, 1.1f);
+            for (int i = 0; i < 8; ++i) {
+                settingsIconTeeth[i].setScale(1.1f, 1.1f);
+            }
+        } else {
+            settingsHovered = false;
+            settingsIconOuter.setScale(1.0f, 1.0f);
+            settingsIconInner.setScale(1.0f, 1.0f);
+            for (int i = 0; i < 8; ++i) {
+                settingsIconTeeth[i].setScale(1.0f, 1.0f);
+            }
+        }
     }
 
     if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
@@ -131,6 +180,11 @@ void Interface::handleMouseEvents(sf::Event& event, bool& selectingLevel, bool r
             else if (resumeGameButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
                 menuClickSound.play();
                 screenManager.setScreen(std::make_unique<GameScreen>(screenManager));
+            }
+            // Handle settings icon click
+            else if (settingsIconOuter.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
+                menuClickSound.play();
+                settingsClicked = true; // Temporary feedback; can be extended later
             }
         } else {
             if (level1Button.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
@@ -153,6 +207,11 @@ void Interface::handleMouseEvents(sf::Event& event, bool& selectingLevel, bool r
             }
         }
     }
+
+    // Reset click state when mouse button is released
+    if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) {
+        settingsClicked = false;
+    }
 }
 
 void Interface::animate(sf::Time deltaTime, bool selectingLevel, bool resumeAvailable, int score, int lives, int highScore, int level) {
@@ -169,6 +228,7 @@ void Interface::animate(sf::Time deltaTime, bool selectingLevel, bool resumeAvai
     level3Button.setFillColor(buttonColor);
 
     highScoreText.setString("High Score: " + std::to_string(highScore));
+    // No rotation for settings icon - remains static
 }
 
 void Interface::renderMenu(sf::RenderWindow& window, bool selectingLevel, bool resumeAvailable, int highScore) {
@@ -188,5 +248,13 @@ void Interface::renderMenu(sf::RenderWindow& window, bool selectingLevel, bool r
         window.draw(level2Text);
         window.draw(level3Button);
         window.draw(level3Text);
+    }
+    // Render settings icon only in main menu (not in level selection)
+    if (!selectingLevel) {
+        window.draw(settingsIconOuter);
+        for (int i = 0; i < 8; ++i) {
+            window.draw(settingsIconTeeth[i]);
+        }
+        window.draw(settingsIconInner); // Draw inner circle last
     }
 }

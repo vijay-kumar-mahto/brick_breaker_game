@@ -30,6 +30,13 @@ private:
     sf::RectangleShape level2Button;
     sf::RectangleShape level3Button;
     float animationTime;
+
+    // New members for settings icon (gear) - Static with rectangular teeth
+    sf::CircleShape settingsIconOuter; // Outer gear outline
+    sf::CircleShape settingsIconInner; // Inner hollow circle
+    sf::RectangleShape settingsIconTeeth[8]; // 8 rectangular teeth
+    bool settingsHovered; // Track hover state
+    bool settingsClicked; // Track click state for feedback
 };
 
 #endif
