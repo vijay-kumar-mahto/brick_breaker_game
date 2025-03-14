@@ -25,6 +25,7 @@ public:
     bool isGameOver() const { return lives <= 0 || (bricks.empty() && level == 3); }
     bool isPaused() const { return paused; } // New: Check paused state
     void setPaused(bool pause) { paused = pause; } // New: Set paused state
+    void setBallSpeedMultiplier(float multiplier); // Controls speed across all levels
 
 private:
     void spawnPowerUp(sf::Vector2f position);
@@ -42,6 +43,9 @@ private:
     int level;
     float gameSpeed;
     bool paused = false; // New: Paused state
+    float gameSpeedMultiplier; // Added to store user-selected speed
+    float baseBallSpeed; // Fixed base speed (100.0f)
+
 };
 
 #endif

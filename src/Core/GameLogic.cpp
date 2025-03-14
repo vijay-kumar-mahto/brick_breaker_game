@@ -10,7 +10,9 @@ GameLogic::GameLogic(sf::Sound& paddleHitSound)
     , lives(3)
     , level(1)
     , gameSpeed(1.0f)
-    , paused(false) {
+    , paused(false)
+    , gameSpeedMultiplier(1.0f)
+    , baseBallSpeed(100.0f){
     brickBreakSound.setBuffer(ResourceManager::getInstance().getSoundBuffer("brick_break"));
     powerUpSound.setBuffer(ResourceManager::getInstance().getSoundBuffer("power_up"));
     lifeLostSound.setBuffer(ResourceManager::getInstance().getSoundBuffer("life_lost"));
@@ -101,8 +103,8 @@ void GameLogic::spawnPowerUp(sf::Vector2f position) {
 void GameLogic::nextLevel() {
     bricks.clear();
     //ball.setSpeed(150.0f + (level - 1) * 50.0f);
-    ball.setSpeed(100.0f);
-    gameSpeed = 1.0f + (level - 1) * 0.2f;
+    ball.setSpeed(baseBallSpeed * gameSpeedMultiplier);
+    //gameSpeed = 1.0f + (level - 1) * 0.2f;
 
     int rows = 4 + level;
     for (int i = 0; i < 8; i++) {
@@ -110,4 +112,9 @@ void GameLogic::nextLevel() {
             bricks.emplace_back(100 * i + 50, 50 * j + 120, (rand() % (level + 1)) + 1);
         }
     }
+}
+
+void GameLogic::setBallSpeedMultiplier(float multiplier) {
+    gameSpeedMultiplier = multiplier;
+    ball.setSpeed(baseBallSpeed * gameSpeedMultiplier); // Apply immediately
 }

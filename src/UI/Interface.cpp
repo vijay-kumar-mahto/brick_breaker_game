@@ -2,8 +2,9 @@
 #include "GameScreen.h"
 #include <cmath>
 #include <iostream>
+#include "ResourceManager.h" // Added for sound control
 
-Interface::Interface() : animationTime(0.0f), settingsHovered(false), settingsClicked(false) {}
+Interface::Interface() : animationTime(0.0f), settingsHovered(false), settingsClicked(false), soundOn(true) {}
 
 void Interface::setup(sf::RenderWindow& window) {
     if (!font.loadFromFile("Resources/font.ttf")) {
@@ -126,9 +127,54 @@ void Interface::setup(sf::RenderWindow& window) {
         settingsIconTeeth[i].setOrigin(0, 6);
         settingsIconTeeth[i].setRotation(i * 45);
     }
+
+    // Setup for settings buttons on menuPanel
+    settingText.setFont(font);
+    settingText.setString("Setting");
+    settingText.setCharacterSize(40);
+    settingText.setFillColor(sf::Color::White);
+    settingText.setOutlineColor(sf::Color(0, 0, 0, 150));
+    settingText.setOutlineThickness(2);
+    settingText.setPosition(335, 225);
+
+    soundButton.setSize(sf::Vector2f(200, 50));
+    soundButton.setPosition(300, 290);
+    soundButton.setFillColor(sf::Color(60, 120, 180));
+    soundButton.setOutlineColor(sf::Color::White);
+    soundButton.setOutlineThickness(2);
+
+    soundButtonText.setFont(font);
+    soundButtonText.setString("Sound ON/OFF");
+    soundButtonText.setCharacterSize(22);
+    soundButtonText.setFillColor(sf::Color::White);
+    soundButtonText.setPosition(330, 300);
+
+    speedButton.setSize(sf::Vector2f(200, 50));
+    speedButton.setPosition(300, 360);
+    speedButton.setFillColor(sf::Color(60, 120, 180));
+    speedButton.setOutlineColor(sf::Color::White);
+    speedButton.setOutlineThickness(2);
+
+    speedButtonText.setFont(font);
+    speedButtonText.setString("Speed X.Xx");
+    speedButtonText.setCharacterSize(22);
+    speedButtonText.setFillColor(sf::Color::White);
+    speedButtonText.setPosition(340, 370);
+
+    resetHighScoreButton.setSize(sf::Vector2f(200, 50));
+    resetHighScoreButton.setPosition(300, 430);
+    resetHighScoreButton.setFillColor(sf::Color(60, 120, 180));
+    resetHighScoreButton.setOutlineColor(sf::Color::White);
+    resetHighScoreButton.setOutlineThickness(2);
+
+    resetHighScoreButtonText.setFont(font);
+    resetHighScoreButtonText.setString("Reset High Score");
+    resetHighScoreButtonText.setCharacterSize(22);
+    resetHighScoreButtonText.setFillColor(sf::Color::White);
+    resetHighScoreButtonText.setPosition(310, 440);
 }
 
-void Interface::handleMouseEvents(sf::Event& event, bool& selectingLevel, bool resumeAvailable, sf::Sound& menuClickSound, ScreenManager& screenManager) {
+void Interface::handleMouseEvents(sf::Event& event, bool& selectingLevel, bool resumeAvailable, sf::Sound& menuClickSound, ScreenManager& screenManager, int& highScore) {
     if (event.type == sf::Event::MouseMoved) {
         sf::Vector2i mousePos = sf::Mouse::getPosition(screenManager.getWindow());
         if (newGameButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
@@ -168,53 +214,114 @@ void Interface::handleMouseEvents(sf::Event& event, bool& selectingLevel, bool r
                 settingsIconTeeth[i].setScale(1.0f, 1.0f);
             }
         }
+
+        // Handle hover for settings buttons (only if settingsClicked is true)
+        if (settingsClicked) {
+            if (soundButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
+                soundButton.setScale(1.05f, 1.05f);
+            else
+                soundButton.setScale(1.0f, 1.0f);
+            if (speedButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
+                speedButton.setScale(1.05f, 1.05f);
+            else
+                speedButton.setScale(1.0f, 1.0f);
+            if (resetHighScoreButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
+                resetHighScoreButton.setScale(1.05f, 1.05f);
+            else
+                resetHighScoreButton.setScale(1.0f, 1.0f);
+        }
     }
 
     if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
         sf::Vector2i mousePos = sf::Mouse::getPosition(screenManager.getWindow());
-        if (!selectingLevel) {
-            if (newGameButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
+        // Handle settings icon click as a toggle
+        if (settingsIconOuter.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
+            menuClickSound.play();
+            settingsClicked = !settingsClicked; // Toggle settings view
+        }
+        if (settingsClicked) {
+            // Added logic for sound button toggle
+            if (soundButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
                 menuClickSound.play();
-                selectingLevel = true;
+                soundOn = !soundOn; // Toggle sound state
+                if (soundOn) {
+                    soundButtonText.setString("Sound ON");
+                    ResourceManager::getInstance().getSound("paddle_hit").setVolume(100.f);
+                    ResourceManager::getInstance().getSound("brick_break").setVolume(100.f);
+                    ResourceManager::getInstance().getSound("power_up").setVolume(100.f);
+                    ResourceManager::getInstance().getSound("life_lost").setVolume(100.f);
+                    ResourceManager::getInstance().getSound("menu_click").setVolume(100.f);
+                } else {
+                    soundButtonText.setString("Sound OFF");
+                    ResourceManager::getInstance().getSound("paddle_hit").setVolume(0.f);
+                    ResourceManager::getInstance().getSound("brick_break").setVolume(0.f);
+                    ResourceManager::getInstance().getSound("power_up").setVolume(0.f);
+                    ResourceManager::getInstance().getSound("life_lost").setVolume(0.f);
+                    ResourceManager::getInstance().getSound("menu_click").setVolume(0.f);
+                }
             }
-            else if (resumeGameButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
+            // Speed toggle button GUI change
+            if (speedButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
                 menuClickSound.play();
-                screenManager.setScreen(std::make_unique<GameScreen>(screenManager));
+                speedState = (speedState + 1) % 4; // Cycle through 0, 1, 2, 3
+                switch (speedState) {
+                    case 0:
+                        speedButtonText.setString("Speed 0.5x");
+                    break;
+                    case 1:
+                        speedButtonText.setString("Speed 1.0x");
+                    break;
+                    case 2:
+                        speedButtonText.setString("Speed 1.5x");
+                    break;
+                    case 3:
+                        speedButtonText.setString("Speed 2.0x");
+                    break;
+                }
             }
-            // Handle settings icon click
-            else if (settingsIconOuter.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
+            // Added logic for reset high score button
+            if (resetHighScoreButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
                 menuClickSound.play();
-                settingsClicked = true; // Temporary feedback; can be extended later
+                highScore = 0; // Reset the actual highScore passed by reference
+                highScoreText.setString("High Score: " + std::to_string(highScore)); // Update display
             }
-        } else {
-            if (level1Button.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
-                menuClickSound.play();
-                auto gameScreen = std::make_unique<GameScreen>(screenManager);
-                gameScreen->resetGame(true, 1);
-                screenManager.setScreen(std::move(gameScreen));
+        }
+        else {
+            if (!selectingLevel) {
+                if (newGameButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
+                    menuClickSound.play();
+                    selectingLevel = true;
+                }
+                else if (resumeGameButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
+                    menuClickSound.play();
+                    screenManager.setScreen(std::make_unique<GameScreen>(screenManager));
+                }
             }
-            else if (level2Button.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
-                menuClickSound.play();
-                auto gameScreen = std::make_unique<GameScreen>(screenManager);
-                gameScreen->resetGame(true, 2);
-                screenManager.setScreen(std::move(gameScreen));
-            }
-            else if (level3Button.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
-                menuClickSound.play();
-                auto gameScreen = std::make_unique<GameScreen>(screenManager);
-                gameScreen->resetGame(true, 3);
-                screenManager.setScreen(std::move(gameScreen));
+            else {
+                if (level1Button.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
+                    menuClickSound.play();
+                    auto gameScreen = std::make_unique<GameScreen>(screenManager);
+                    gameScreen->resetGame(true, 1);
+                    screenManager.setScreen(std::move(gameScreen));
+                }
+                else if (level2Button.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
+                    menuClickSound.play();
+                    auto gameScreen = std::make_unique<GameScreen>(screenManager);
+                    gameScreen->resetGame(true, 2);
+                    screenManager.setScreen(std::move(gameScreen));
+                }
+                else if (level3Button.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
+                    menuClickSound.play();
+                    auto gameScreen = std::make_unique<GameScreen>(screenManager);
+                    gameScreen->resetGame(true, 3);
+                    screenManager.setScreen(std::move(gameScreen));
+                }
             }
         }
     }
-
-    // Reset click state when mouse button is released
-    if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) {
-        settingsClicked = false;
-    }
 }
 
-void Interface::animate(sf::Time deltaTime, bool selectingLevel, bool resumeAvailable, int score, int lives, int highScore, int level) {
+void Interface::animate(sf::Time deltaTime, bool selectingLevel, bool resumeAvailable, int score, int lives, int& highScore, int level) {
     animationTime += deltaTime.asSeconds();
     float pulse = 0.5f + 0.5f * std::sin(animationTime * 2.0f);
 
@@ -227,31 +334,50 @@ void Interface::animate(sf::Time deltaTime, bool selectingLevel, bool resumeAvai
     level2Button.setFillColor(buttonColor);
     level3Button.setFillColor(buttonColor);
 
+    // Animate settings buttons
+    if (settingsClicked) {
+        highScoreText.setString("High Score: " + std::to_string(highScore));
+        soundButton.setFillColor(buttonColor);
+        speedButton.setFillColor(buttonColor);
+        resetHighScoreButton.setFillColor(buttonColor);
+    }
+
     highScoreText.setString("High Score: " + std::to_string(highScore));
     // No rotation for settings icon - remains static
 }
 
-void Interface::renderMenu(sf::RenderWindow& window, bool selectingLevel, bool resumeAvailable, int highScore) {
+void Interface::renderMenu(sf::RenderWindow& window, bool selectingLevel, bool resumeAvailable, int& highScore) {
     window.draw(shadow);
     window.draw(menuPanel);
     window.draw(titleText);
-    if (!selectingLevel) {
+    if (!selectingLevel && !settingsClicked) {
         window.draw(newGameButton);
         window.draw(newGameText);
         window.draw(resumeGameButton);
         window.draw(resumeGameText);
-        window.draw(highScoreText);
-    } else {
+        window.draw(highScoreText); // High score only in main menu
+        window.draw(settingsIconOuter); // Settings icon only in main menu
+        for (int i = 0; i < 8; ++i) {
+            window.draw(settingsIconTeeth[i]);
+        }
+        window.draw(settingsIconInner); // Draw inner circle last
+    } else if (selectingLevel) {
         window.draw(level1Button);
         window.draw(level1Text);
         window.draw(level2Button);
         window.draw(level2Text);
         window.draw(level3Button);
         window.draw(level3Text);
-    }
-    // Render settings icon only in main menu (not in level selection)
-    if (!selectingLevel) {
-        window.draw(settingsIconOuter);
+    } else if (settingsClicked) {
+        window.draw(soundButton);
+        window.draw(soundButtonText);
+        window.draw(speedButton);
+        window.draw(speedButtonText);
+        window.draw(resetHighScoreButton);
+        window.draw(resetHighScoreButtonText);
+        window.draw(settingText);
+        window.draw(highScoreText); // High score only in main menu
+        window.draw(settingsIconOuter); // Settings icon only in main menu
         for (int i = 0; i < 8; ++i) {
             window.draw(settingsIconTeeth[i]);
         }

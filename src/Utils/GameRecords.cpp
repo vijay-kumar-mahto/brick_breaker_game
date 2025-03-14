@@ -44,3 +44,13 @@ void GameRecords::load() {
 int GameRecords::getHighScore() const {
     return highScore;
 }
+
+void GameRecords::resetHighScore() {
+    highScore = 0;
+    std::ofstream file("../Resources/records.csv", std::ios::trunc); // Open in truncate mode to clear file
+    if (file.is_open()) {
+        file.close(); // Empty file
+    } else {
+        std::cout << "Failed to reset Resources/records.csv!" << std::endl;
+    }
+}

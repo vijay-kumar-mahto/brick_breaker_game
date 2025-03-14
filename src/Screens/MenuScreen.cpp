@@ -8,7 +8,8 @@ MenuScreen::MenuScreen(ScreenManager& screenManager)
     , records()
     , selectingLevel(false)
     , resumeAvailable(false)
-    , menuClickSound(ResourceManager::getInstance().getSound("menu_click")) {
+    , menuClickSound(ResourceManager::getInstance().getSound("menu_click"))
+    , highScore(records.getHighScore()) { // Initialize highScore
     interface.setup(screenManager.getWindow());
 }
 
@@ -27,16 +28,19 @@ void MenuScreen::handleEvents(sf::RenderWindow& window) {
                 screenManager.setScreen(std::make_unique<GameScreen>(screenManager));
             }
         }
-        interface.handleMouseEvents(event, selectingLevel, resumeAvailable, menuClickSound, screenManager);
+        interface.handleMouseEvents(event, selectingLevel, resumeAvailable, menuClickSound, screenManager, highScore);
+        if (highScore == 0) { // Check if reset occurred
+            records.resetHighScore(); // Sync reset to GameRecords
+        }
     }
 }
 
 void MenuScreen::update(sf::Time deltaTime) {
-    interface.animate(deltaTime, selectingLevel, resumeAvailable, 0, 3, records.getHighScore(), 1);
+    interface.animate(deltaTime, selectingLevel, resumeAvailable, 0, 3, highScore, 1);
 }
 
 void MenuScreen::render(sf::RenderWindow& window) {
     window.clear(sf::Color(20, 20, 40));
-    interface.renderMenu(window, selectingLevel, resumeAvailable, records.getHighScore());
+    interface.renderMenu(window, selectingLevel, resumeAvailable, highScore);
     window.display();
 }

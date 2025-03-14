@@ -9,13 +9,14 @@ class Interface {
 public:
     Interface();
     void setup(sf::RenderWindow& window);
-    void handleMouseEvents(sf::Event& event, bool& selectingLevel, bool resumeAvailable, sf::Sound& menuClickSound, ScreenManager& screenManager);
-    void animate(sf::Time deltaTime, bool selectingLevel, bool resumeAvailable, int score, int lives, int highScore, int level);
-    void renderMenu(sf::RenderWindow& window, bool selectingLevel, bool resumeAvailable, int highScore);
+    void handleMouseEvents(sf::Event& event, bool& selectingLevel, bool resumeAvailable, sf::Sound& menuClickSound, ScreenManager& screenManager, int& highScore);
+    void animate(sf::Time deltaTime, bool selectingLevel, bool resumeAvailable, int score, int lives, int& highScore, int level);
+    void renderMenu(sf::RenderWindow& window, bool selectingLevel, bool resumeAvailable, int& highScore);
 
 private:
     sf::Font font;
     sf::Text titleText;
+    sf:: Text settingText;
     sf::Text newGameText;
     sf::Text resumeGameText;
     sf::Text highScoreText;
@@ -36,7 +37,19 @@ private:
     sf::CircleShape settingsIconInner; // Inner hollow circle
     sf::RectangleShape settingsIconTeeth[8]; // 8 rectangular teeth
     bool settingsHovered; // Track hover state
-    bool settingsClicked; // Track click state for feedback
+    bool settingsClicked; // Track click state, now used to show settings buttons
+
+    // New members for settings buttons (replacing popup)
+    sf::RectangleShape soundButton; // Sound On/Off button
+    sf::Text soundButtonText; // Text for sound button
+    sf::RectangleShape speedButton; // Speed toggle button
+    sf::Text speedButtonText; // Text for speed button
+    sf::RectangleShape resetHighScoreButton; // Reset High Score button
+    sf::Text resetHighScoreButtonText; // Text for reset button
+
+    // Added for sound toggle feature
+    bool soundOn; // Tracks whether sound is on (true) or off (false)
+    int speedState;
 };
 
 #endif

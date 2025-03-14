@@ -9,6 +9,7 @@ public:
     void save(int score, int lives);
     void load();
     int getHighScore() const;
+    void resetHighScore(); // Added for reset feature
 
 private:
     int highScore;

@@ -20,6 +20,7 @@ private:
     bool selectingLevel;
     bool resumeAvailable;
     sf::Sound& menuClickSound;
+    int highScore; // Added to store high score locally
 };
 
 #endif
