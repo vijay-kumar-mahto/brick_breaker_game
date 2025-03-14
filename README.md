@@ -23,8 +23,8 @@ Built from scratch, Brick Breaker combines nostalgic gameplay with modern enhanc
 ## Features
 - **Multi-Level Gameplay**: Three levels with increasing difficulty (4-6 rows of bricks).
 - **Power-Ups**:
-  - *Speed Boost*: Temporarily increases ball speed.
-  - *Paddle Size*: Extends paddle width for easier hits.
+  - **Speed Boost**: Temporarily increases ball speed.
+  - **Paddle Size**: Extends paddle width for easier hits.
 - **Settings**:
   - Sound toggle (ON/OFF).
   - Game speed options (0.5x, 1.0x, 1.5x, 2.0x).
@@ -38,7 +38,7 @@ Built from scratch, Brick Breaker combines nostalgic gameplay with modern enhanc
 
 ## Installation
 ### Prerequisites
-- **C++ Compiler**: GCC 9+, MSVC 2019+, or Clang 10+ (C++11 required).
+- **C++ Compiler**: GCC 9+ (C++11 required).
 - **SFML**: Version 2.5.1 or higher ([Download](https://www.sfml-dev.org/download.php)).
 - **CMake**: Version 3.10+ (optional, for build automation).
 - **OS**: Windows 10+, macOS 10.15+, or Linux (Ubuntu 20.04+ tested).
