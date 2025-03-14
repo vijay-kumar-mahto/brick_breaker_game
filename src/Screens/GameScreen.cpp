@@ -36,6 +36,6 @@ void GameScreen::render(sf::RenderWindow& window) {
     window.display();
 }
 
-void GameScreen::resetGame(bool newGame, int selectedLevel) {
-    gameLogic.resetGame(newGame, selectedLevel);
+void GameScreen::resetGame(bool newGame, int selectedLevel, float speedMultiplier) {
+    gameLogic.resetGame(newGame, selectedLevel, speedMultiplier);
 }

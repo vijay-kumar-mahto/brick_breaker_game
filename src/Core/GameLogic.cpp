@@ -9,13 +9,13 @@ GameLogic::GameLogic(sf::Sound& paddleHitSound)
     , score(0)
     , lives(3)
     , level(1)
-    , gameSpeed(1.0f)
     , paused(false)
+    , gameSpeed(1.0f)
     , gameSpeedMultiplier(1.0f)
     , baseBallSpeed(100.0f){
-    brickBreakSound.setBuffer(ResourceManager::getInstance().getSoundBuffer("brick_break"));
-    powerUpSound.setBuffer(ResourceManager::getInstance().getSoundBuffer("power_up"));
-    lifeLostSound.setBuffer(ResourceManager::getInstance().getSoundBuffer("life_lost"));
+    //brickBreakSound.setBuffer(ResourceManager::getInstance().getSoundBuffer("brick_break"));
+    //powerUpSound.setBuffer(ResourceManager::getInstance().getSoundBuffer("power_up"));
+    //lifeLostSound.setBuffer(ResourceManager::getInstance().getSoundBuffer("life_lost"));
     records.load();
     nextLevel();
 }
@@ -30,7 +30,7 @@ void GameLogic::update(sf::Time deltaTime, sf::RenderWindow& window) {
                 ball.bounceVertical();
                 score += it->hit() ? 10 : 5;
                 if (it->isDestroyed()) {
-                    brickBreakSound.play();
+                    ResourceManager::getInstance().getSound("brick_break").play();
                     if (rand() % 100 < 20)
                         spawnPowerUp(it->getPosition());
                     it = bricks.erase(it);
@@ -44,7 +44,7 @@ void GameLogic::update(sf::Time deltaTime, sf::RenderWindow& window) {
 
         for (auto it = powerUps.begin(); it != powerUps.end();) {
             if (paddle.getBounds().intersects(it->getBounds())) {
-                powerUpSound.play();
+                ResourceManager::getInstance().getSound("power_up").play();
                 it->applyEffect(paddle, ball);
                 it = powerUps.erase(it);
             } else {
@@ -55,7 +55,7 @@ void GameLogic::update(sf::Time deltaTime, sf::RenderWindow& window) {
         }
 
         if (ball.isOutOfBounds()) {
-            lifeLostSound.play();
+            ResourceManager::getInstance().getSound("life_lost").play();
             lives--;
             ball.reset();
             paddle.reset();
@@ -78,7 +78,7 @@ void GameLogic::render(sf::RenderWindow& window) {
     for (const auto& powerUp : powerUps) powerUp.draw(window);
 }
 
-void GameLogic::resetGame(bool newGame, int selectedLevel) {
+void GameLogic::resetGame(bool newGame, int selectedLevel, float speedMultiplier) {
     if (newGame) {
         bricks.clear();
         powerUps.clear();
@@ -87,8 +87,11 @@ void GameLogic::resetGame(bool newGame, int selectedLevel) {
         score = 0;
         lives = 3;
         level = selectedLevel;
-        gameSpeed = 1.0f;
+        //gameSpeed = 1.0f;
+        gameSpeedMultiplier = speedMultiplier; // Set user-selected speed
         nextLevel();
+        std::cout << "Game reset to Level " << selectedLevel << " with speed multiplier: " << gameSpeedMultiplier
+                  << ", Ball speed set to: " << (baseBallSpeed * gameSpeedMultiplier) << std::endl;
     } else {
         ball.reset();
         paddle.reset();

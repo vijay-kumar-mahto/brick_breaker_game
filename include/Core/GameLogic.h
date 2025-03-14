@@ -16,7 +16,7 @@ public:
     GameLogic(sf::Sound& paddleHitSound);
     void update(sf::Time deltaTime, sf::RenderWindow& window);
     void render(sf::RenderWindow& window);
-    void resetGame(bool newGame = true, int selectedLevel = 1);
+    void resetGame(bool newGame = true, int selectedLevel = 1, float speedMultiplier = 1.0f);
     void nextLevel();
     int getScore() const { return score; }
     int getLives() const { return lives; }
@@ -35,14 +35,15 @@ private:
     std::vector<PowerUp> powerUps;
     GameRecords records;
     sf::Sound& paddleHitSound;
-    sf::Sound brickBreakSound;
-    sf::Sound powerUpSound;
-    sf::Sound lifeLostSound;
+    //sf::Sound brickBreakSound;
+    //sf::Sound powerUpSound;
+    //sf::Sound lifeLostSound;
+
     int score;
     int lives;
     int level;
-    float gameSpeed;
     bool paused = false; // New: Paused state
+    float gameSpeed;
     float gameSpeedMultiplier; // Added to store user-selected speed
     float baseBallSpeed; // Fixed base speed (100.0f)
 

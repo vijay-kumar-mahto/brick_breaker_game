@@ -12,6 +12,7 @@ public:
     void handleMouseEvents(sf::Event& event, bool& selectingLevel, bool resumeAvailable, sf::Sound& menuClickSound, ScreenManager& screenManager, int& highScore);
     void animate(sf::Time deltaTime, bool selectingLevel, bool resumeAvailable, int score, int lives, int& highScore, int level);
     void renderMenu(sf::RenderWindow& window, bool selectingLevel, bool resumeAvailable, int& highScore);
+    float getSpeedMultiplier() const; // New: Return speed multiplier based on speedState
 
 private:
     sf::Font font;

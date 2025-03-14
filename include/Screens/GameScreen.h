@@ -12,7 +12,7 @@ public:
     void handleEvents(sf::RenderWindow& window) override;
     void update(sf::Time deltaTime) override;
     void render(sf::RenderWindow& window) override;
-    void resetGame(bool newGame = true, int selectedLevel = 1); // Added resetGame method
+    void resetGame(bool newGame = true, int selectedLevel = 1, float speedMultiplier = 1.0f); // Added resetGame method
 
 private:
     ScreenManager& screenManager;

@@ -301,19 +301,19 @@ void Interface::handleMouseEvents(sf::Event& event, bool& selectingLevel, bool r
                 if (level1Button.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
                     menuClickSound.play();
                     auto gameScreen = std::make_unique<GameScreen>(screenManager);
-                    gameScreen->resetGame(true, 1);
+                    gameScreen->resetGame(true, 1, getSpeedMultiplier());
                     screenManager.setScreen(std::move(gameScreen));
                 }
                 else if (level2Button.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
                     menuClickSound.play();
                     auto gameScreen = std::make_unique<GameScreen>(screenManager);
-                    gameScreen->resetGame(true, 2);
+                    gameScreen->resetGame(true, 2, getSpeedMultiplier());
                     screenManager.setScreen(std::move(gameScreen));
                 }
                 else if (level3Button.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
                     menuClickSound.play();
                     auto gameScreen = std::make_unique<GameScreen>(screenManager);
-                    gameScreen->resetGame(true, 3);
+                    gameScreen->resetGame(true, 3, getSpeedMultiplier());
                     screenManager.setScreen(std::move(gameScreen));
                 }
             }
@@ -382,5 +382,15 @@ void Interface::renderMenu(sf::RenderWindow& window, bool selectingLevel, bool r
             window.draw(settingsIconTeeth[i]);
         }
         window.draw(settingsIconInner); // Draw inner circle last
+    }
+}
+
+float Interface::getSpeedMultiplier() const {
+    switch (speedState) {
+        case 0: return 0.5f;
+        case 1: return 1.0f;
+        case 2: return 1.5f;
+        case 3: return 2.0f;
+        default: return 1.0f; // Fallback, should never happen
     }
 }
