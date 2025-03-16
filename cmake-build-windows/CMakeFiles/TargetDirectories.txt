@@ -1,0 +1,3 @@
+/home/vijay/CLionProjects/BrickBreaker/cmake-build-windows/CMakeFiles/BrickBreaker.dir
+/home/vijay/CLionProjects/BrickBreaker/cmake-build-windows/CMakeFiles/edit_cache.dir
+/home/vijay/CLionProjects/BrickBreaker/cmake-build-windows/CMakeFiles/rebuild_cache.dir
