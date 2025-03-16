@@ -1,16 +1,42 @@
+//
+// Created by vijay on 3/13/25.
+//
+
 #include "Interface.h"
 #include "GameScreen.h"
 #include <cmath>
 #include <iostream>
 #include "ResourceManager.h" // Added for sound control
 
+/**
+ * Constructor for the Interface class.
+ *
+ * Initializes the menu interface components with default values:
+ * - animationTime: Tracks elapsed time for animations
+ * - settingsHovered: Tracks if settings button is being hovered over
+ * - settingsClicked: Tracks if settings panel is currently open
+ * - soundOn: Tracks if sound effects are enabled
+ *
+ * Likely also sets up UI elements including buttons, text, backgrounds,
+ * and loads required fonts and textures for the menu interface.
+ */
 Interface::Interface() : animationTime(0.0f), settingsHovered(false), settingsClicked(false), soundOn(true) {}
 
+/**
+ * Configures the interface based on window properties.
+ * @param window Reference to the game's render window
+ *
+ * Positions UI elements according to the window dimensions.
+ * Ensures proper scaling and alignment of menu components.
+ * Sets up view boundaries and coordinates for interface elements.
+ * Called during initialization to properly configure the interface.
+ */
 void Interface::setup(sf::RenderWindow& window) {
     if (!font.loadFromFile("Resources/font.ttf")) {
         std::cout << "Failed to load font!" << std::endl;
     }
 
+    // Main Menu Setup
     menuPanel.setSize(sf::Vector2f(600, 400));
     menuPanel.setPosition(100, 100);
     menuPanel.setFillColor(sf::Color(40, 80, 120));
@@ -60,6 +86,7 @@ void Interface::setup(sf::RenderWindow& window) {
     highScoreText.setOutlineThickness(1);
     highScoreText.setPosition(150, 10);
 
+    // Level Menu Setup
     level1Button.setSize(sf::Vector2f(110, 40));
     level1Button.setPosition(200, 250);
     level1Button.setFillColor(sf::Color(60, 120, 180));
@@ -174,6 +201,23 @@ void Interface::setup(sf::RenderWindow& window) {
     resetHighScoreButtonText.setPosition(310, 440);
 }
 
+/**
+ * Processes mouse interactions with the interface.
+ * @param event Reference to the current SFML event
+ * @param selectingLevel Reference to boolean indicating if level selection mode is active
+ * @param resumeAvailable Boolean indicating if game resume option should be available
+ * @param menuClickSound Reference to the sound effect for UI interaction
+ * @param screenManager Reference to the screen management system
+ * @param highScore Reference to the current high score value
+ *
+ * Handles mouse clicks, hovers, and movements over menu elements.
+ * Triggers appropriate actions based on which buttons are interacted with:
+ * - New game/level selection
+ * - Game resuming
+ * - Settings changes
+ * - High score resets
+ * Updates state variables and plays sound effects accordingly.
+ */
 void Interface::handleMouseEvents(sf::Event& event, bool& selectingLevel, bool resumeAvailable, sf::Sound& menuClickSound, ScreenManager& screenManager, int& highScore) {
     if (event.type == sf::Event::MouseMoved) {
         sf::Vector2i mousePos = sf::Mouse::getPosition(screenManager.getWindow());
@@ -321,6 +365,21 @@ void Interface::handleMouseEvents(sf::Event& event, bool& selectingLevel, bool r
     }
 }
 
+/**
+ * Updates the interface animations and state over time.
+ * @param deltaTime Time elapsed since the last frame
+ * @param selectingLevel Boolean indicating if level selection mode is active
+ * @param resumeAvailable Boolean indicating if game resume option is available
+ * @param score Current player score
+ * @param lives Remaining player lives
+ * @param highScore Reference to the current high score value
+ * @param level Current game level
+ *
+ * Progresses animations based on elapsed time.
+ * Updates visual effects, transitions, and UI element states.
+ * May update displayed statistics if they've changed.
+ * Controls timing for any menu transitions or effects.
+ */
 void Interface::animate(sf::Time deltaTime, bool selectingLevel, bool resumeAvailable, int score, int lives, int& highScore, int level) {
     animationTime += deltaTime.asSeconds();
     float pulse = 0.5f + 0.5f * std::sin(animationTime * 2.0f);
@@ -346,6 +405,21 @@ void Interface::animate(sf::Time deltaTime, bool selectingLevel, bool resumeAvai
     // No rotation for settings icon - remains static
 }
 
+/**
+ * Renders the menu interface to the screen.
+ * @param window Reference to the render window
+ * @param selectingLevel Boolean indicating if level selection mode is active
+ * @param resumeAvailable Boolean indicating if game resume option is available
+ * @param highScore Reference to the current high score value
+ *
+ * Draws all menu components to the provided window:
+ * - Title and game logo
+ * - Menu buttons (play, resume, settings)
+ * - Level selection interface (when active)
+ * - High score display
+ * - Settings panel (when opened)
+ * Ensures all elements are correctly positioned and rendered in proper order.
+ */
 void Interface::renderMenu(sf::RenderWindow& window, bool selectingLevel, bool resumeAvailable, int& highScore) {
     window.draw(shadow);
     window.draw(menuPanel);
@@ -385,6 +459,14 @@ void Interface::renderMenu(sf::RenderWindow& window, bool selectingLevel, bool r
     }
 }
 
+/**
+ * Returns the current game speed multiplier setting.
+ * @return Float value representing the game speed multiplier
+ *
+ * Provides access to the user-selected game speed setting.
+ * Used to adjust gameplay speed in game logic.
+ * Allows other components to respect the player's speed preference.
+ */
 float Interface::getSpeedMultiplier() const {
     switch (speedState) {
         case 0: return 0.5f;

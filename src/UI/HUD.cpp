@@ -1,7 +1,19 @@
+//
+// Created by vijay on 3/13/25.
+//
+
 #include "HUD.h"
 #include "MenuScreen.h"
 #include <iostream>
 
+/**
+ * Constructor for the HUD (Heads-Up Display) class.
+ *
+ * Initializes the HUD with default values.
+ * Sets the popup state to inactive initially.
+ * Likely sets up text elements, fonts, and positions for score, lives,
+ * level indicators, and other UI components that will be displayed during gameplay.
+ */
 HUD::HUD() : isPopupActive(false) {
     if (!font.loadFromFile("Resources/font.ttf")) {
         std::cout << "Failed to load font!" << std::endl;
@@ -142,6 +154,20 @@ HUD::HUD() : isPopupActive(false) {
     popupMainMenuButtonText.setPosition(505, 308);
 }
 
+/**
+ * Processes user input events related to the HUD.
+ * @param event Reference to the current SFML event
+ * @param gameLogic Reference to the game's logic controller
+ * @param screenManager Reference to the screen management system
+ * @param menuClickSound Reference to the sound effect for UI interaction
+ *
+ * Handles user interactions with HUD elements, such as:
+ * - Button clicks in game over screens
+ * - Popup menu interactions
+ * - Pause menu controls
+ * - Navigation between different game states via UI
+ * Triggers appropriate sound effects and screen transitions based on user input.
+ */
 void HUD::handleEvents(sf::Event& event, GameLogic& gameLogic, ScreenManager& screenManager, sf::Sound& menuClickSound) {
     if (event.type == sf::Event::MouseMoved) {
         sf::Vector2i mousePos = sf::Mouse::getPosition(screenManager.getWindow());
@@ -231,6 +257,18 @@ void HUD::handleEvents(sf::Event& event, GameLogic& gameLogic, ScreenManager& sc
     }
 }
 
+/**
+ * Updates the HUD's state with current game information.
+ * @param score Current player score
+ * @param lives Remaining player lives
+ * @param level Current game level
+ * @param gameLogic Reference to the game's logic controller for additional state information
+ *
+ * Refreshes all displayed information on the HUD based on the current game state.
+ * Updates score counters, life indicators, level displays, and any other
+ * dynamic information shown to the player during gameplay.
+ * May also handle animations or visual effects for changing values.
+ */
 void HUD::update(int score, int lives, int level, GameLogic& gameLogic) {
     scoreText.setString("Score: " + std::to_string(score));
     highScoreText.setString("High Score: " + std::to_string(gameLogic.getHighScore()));
@@ -243,6 +281,18 @@ void HUD::update(int score, int lives, int level, GameLogic& gameLogic) {
     }
 }
 
+/**
+ * Renders the HUD elements to the screen.
+ * @param window Reference to the render window
+ * @param isGameOver Boolean indicating if the game is in a "game over" state
+ *
+ * Draws all HUD components to the provided window.
+ * Displays different elements based on the game state:
+ * - During active gameplay: score, lives, level indicators
+ * - During paused state: pause menu options
+ * - During game over: final score, restart options, etc.
+ * Ensures all text and UI elements are properly positioned and visible.
+ */
 void HUD::render(sf::RenderWindow& window, bool isGameOver) {
     window.draw(uiPanel);
     window.draw(scoreText);
@@ -260,6 +310,7 @@ void HUD::render(sf::RenderWindow& window, bool isGameOver) {
     window.draw(mainMenuButton);
     window.draw(mainMenuButtonText);
 
+    // Game Over Popup Window
     if (isPopupActive) {
         window.draw(popupWindow);
         window.draw(popupTitle);

@@ -1,7 +1,18 @@
+//
+// Created by vijay on 3/13/25.
+//
+
 #include "GameLogic.h"
 #include <iostream>
 #include <cmath>
 
+/**
+ * Constructor for GameLogic class.
+ * @param paddleHitSound Reference to the sound effect played when ball hits paddle
+ *
+ * Initializes the game components including paddle, ball, and game state variables
+ * such as score, lives, level, and game speed settings.
+ */
 GameLogic::GameLogic(sf::Sound& paddleHitSound)
     : paddle(400, 550)
     , ball(400, 500, paddleHitSound)
@@ -20,6 +31,14 @@ GameLogic::GameLogic(sf::Sound& paddleHitSound)
     nextLevel();
 }
 
+/**
+ * Updates game state based on time elapsed since last frame.
+ * @param deltaTime Time elapsed since the last update
+ * @param window Reference to the game window for input detection and boundaries
+ *
+ * Handles movement, collisions, power-ups, and game state changes.
+ * Only updates game elements if the game is not paused.
+ */
 void GameLogic::update(sf::Time deltaTime, sf::RenderWindow& window) {
     if (!paused) { // Only update if not paused
         paddle.update(deltaTime, window);
@@ -71,6 +90,12 @@ void GameLogic::update(sf::Time deltaTime, sf::RenderWindow& window) {
     }
 }
 
+/**
+ * Renders all game elements to the window.
+ * @param window Reference to the render window where game elements will be drawn
+ *
+ * Draws the paddle, ball, bricks, power-ups, and any UI elements in their current state.
+ */
 void GameLogic::render(sf::RenderWindow& window) {
     paddle.draw(window);
     ball.draw(window);
@@ -78,6 +103,15 @@ void GameLogic::render(sf::RenderWindow& window) {
     for (const auto& powerUp : powerUps) powerUp.draw(window);
 }
 
+/**
+ * Resets the game state.
+ * @param newGame If true, resets score and sets up a brand new game
+ * @param selectedLevel The level to initialize (affects brick layout and difficulty)
+ * @param speedMultiplier Adjusts the game's speed
+ *
+ * Resets the player's paddle, ball position, and sets up brick configurations
+ * based on the selected level.
+ */
 void GameLogic::resetGame(bool newGame, int selectedLevel, float speedMultiplier) {
     if (newGame) {
         bricks.clear();
@@ -99,10 +133,23 @@ void GameLogic::resetGame(bool newGame, int selectedLevel, float speedMultiplier
     paused = false; // Ensure paused is reset to false on new game
 }
 
+/**
+ * Creates a new power-up at the specified position.
+ * @param position Vector containing the x,y coordinates where the power-up should appear
+ *
+ * Randomly determines the type of power-up to spawn and adds it to the active power-ups list.
+ * Typically called when a brick is destroyed.
+ */
 void GameLogic::spawnPowerUp(sf::Vector2f position) {
     powerUps.emplace_back(position, rand() % 2 == 0 ? PowerUp::Type::SpeedBoost : PowerUp::Type::PaddleSize);
 }
 
+/**
+ * Advances the game to the next level.
+ *
+ * Increases the level counter, sets up a new brick configuration,
+ * potentially increases difficulty, and resets the ball and paddle positions.
+ */
 void GameLogic::nextLevel() {
     bricks.clear();
     //ball.setSpeed(150.0f + (level - 1) * 50.0f);
@@ -117,6 +164,13 @@ void GameLogic::nextLevel() {
     }
 }
 
+/**
+ * Sets the multiplier for ball speed.
+ * @param multiplier The factor by which to multiply the base ball speed
+ *
+ * Adjusts the ball's speed, allowing for dynamic difficulty changes
+ * or implementing speed-related power-ups.
+ */
 void GameLogic::setBallSpeedMultiplier(float multiplier) {
     gameSpeedMultiplier = multiplier;
     ball.setSpeed(baseBallSpeed * gameSpeedMultiplier); // Apply immediately

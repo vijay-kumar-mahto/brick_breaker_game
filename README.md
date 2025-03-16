@@ -1,6 +1,5 @@
 # Brick Breaker
-
-![Brick Breaker Logo](Resources/icon.png)
+![BrickBreakerIcon](Resources/thumbnails/icon.png)
 
 **Version 1.0.0**
 
@@ -13,9 +12,11 @@ Brick Breaker is a modern take on the classic arcade game, developed with C++ an
 - [Usage](#usage)
 - [Controls](#controls)
 - [Project Structure](#project-structure)
+- [Screenshot](#screenshot)
 - [Contributing](#contributing)
 - [License](#license)
 - [Contact](#contact)
+
 
 ## Overview
 Built from scratch, Brick Breaker combines nostalgic gameplay with modern enhancements. It features a robust game engine (`GameLogic`), a dynamic UI (`Interface`, `HUD`), and screen management (`ScreenManager`), all powered by SFML for graphics and audio. This project is open-source under the MIT License, inviting contributions from the community.
@@ -114,6 +115,14 @@ BrickBreaker/
 ├── LICENSE                 # MIT License file
 └── README.md               # Markdown README (this file)
 ```
+
+## Screenshot
+<p align="center">
+  <img src="Resources/thumbnails/menu.png" alt="Level 1" width="300">
+  <img src="Resources/thumbnails/setting.png" alt="Level 2" width="300">
+  <img src="Resources/thumbnails/level.png" alt="Level 3" width="300">
+  <img src="Resources/thumbnails/gameplay.png" alt="Level 4" width="300">
+</p>
 
 ## Contributing
 1. **Fork**: Clone the repo to your GitHub account.
