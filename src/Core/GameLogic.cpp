@@ -23,10 +23,7 @@ GameLogic::GameLogic(sf::Sound& paddleHitSound)
     , paused(false)
     , gameSpeed(1.0f)
     , gameSpeedMultiplier(1.0f)
-    , baseBallSpeed(100.0f){
-    //brickBreakSound.setBuffer(ResourceManager::getInstance().getSoundBuffer("brick_break"));
-    //powerUpSound.setBuffer(ResourceManager::getInstance().getSoundBuffer("power_up"));
-    //lifeLostSound.setBuffer(ResourceManager::getInstance().getSoundBuffer("life_lost"));
+    , baseBallSpeed(300.0f){
     records.load();
     nextLevel();
 }
